@@ -1,44 +1,105 @@
-var builder = WebApplication.CreateBuilder(args);
+using backend.practice.DbContextes;
+using backend.practice.Entities;
+using System.Text.Json.Serialization;
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
+{
+    var builder = WebApplication.CreateBuilder(args);
+    options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
+
+builder.Services.AddOpenApi();
+
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.MapOpenApi();
+
 }
 
 app.UseHttpsRedirection();
-
-var summaries = new[]
+app.MapGet("members/list", () =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    using var db = new LibraryDB();
+    return db.Members.ToList();
 
-app.MapGet("/weatherforecast", () =>
+});
+app.MapPost("members/create", (Member member) =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+    using var db = new LibraryDB();
+    db.Members.Add(member);
+    db.SaveChanges();
+    return "Member Created!";
+});
+app.MapPut("members/update{id}", (int id, Member member) =>
+{
+    using var db = new LibraryDB();
+    var m = db.Members.Find(id);
+    if (m == null)
+    {
+        return "Member Not Found";
+    }
+    m.Firstname = member.Firstname;
+    m.Lastname = member.Lastname;
+    m.Gender = member.Gender;
+    db.SaveChanges();
+    return "Member updated!";
+});
+app.MapDelete("Members/remove{id}", (int id) =>
+{
+    using var db = new LibraryDB();
+    var member = db.Members.Find(id);
+    if (member == null)
+    {
+        return "Member Not Found";
+    }
+    db.Members.Remove(member);
+    db.SaveChanges();
+    return "Member Removed!";
+});
+
+
+app.MapGet("books/list", () =>
+{
+    using var db = new LibraryDB();
+    return db.Books.ToList();
+});
+app.MapPost("books/create", (Book book) =>
+{
+    using var db = new LibraryDB();
+    db.Books.Add(book);
+    db.SaveChanges();
+    return "Book Created!";
+});
+app.MapPut("books/update{id}", (int id, Book book) =>
+{
+    using var db = new LibraryDB();
+    var b = db.Books.Find(id);
+    if (b == null)
+    {
+        return "Book Not Found";
+    }
+    b.title = book.title;
+    b.writer = book.writer;
+    b.publisher = book.publisher;
+    b.price = book.price;
+    db.SaveChanges();
+    return "Book updated!";
+});
+app.MapDelete("books/remove{id}", (int id) =>
+{
+    using var db = new LibraryDB();
+    var book = db.Books.Find(id);
+    if (book == null)
+    {
+        return "Book Not Found";
+    }
+    db.Books.Remove(book);
+    db.SaveChanges();
+    return "Book Removed!";
+});
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

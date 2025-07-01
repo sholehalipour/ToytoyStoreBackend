@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Options;
 
+
 namespace backend.practice.DbContextes
 {
     public class LibraryDB : DbContext
@@ -21,6 +22,7 @@ namespace backend.practice.DbContextes
             optionsBuilder.UseSqlite(@"Data source=DBFiles\librarydb.sqlite");
 
         }
+        
 
 
     }
