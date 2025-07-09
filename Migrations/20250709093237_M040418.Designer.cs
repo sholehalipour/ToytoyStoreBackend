@@ -2,73 +2,41 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-<<<<<<< HEAD
 using toytoy_store_backend.DbContextes;
 
 #nullable disable
 
 namespace toytoy_store_backend.Migrations
-=======
-using backend.practice.DbContextes;
-
-#nullable disable
-
-namespace backend.practice.Migrations
->>>>>>> 1b60adb338816233eb6de69ddf1caf2c1dd5a311
 {
     [DbContext(typeof(LibraryDB))]
-    partial class LibraryDBModelSnapshot : ModelSnapshot
+    [Migration("20250709093237_M040418")]
+    partial class M040418
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.6");
 
-<<<<<<< HEAD
             modelBuilder.Entity("toytoy_store_backend.Entities.Category", b =>
-=======
-            modelBuilder.Entity("backend.practice.Entities.Book", b =>
->>>>>>> 1b60adb338816233eb6de69ddf1caf2c1dd5a311
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-<<<<<<< HEAD
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("toytoy_store_backend.Entities.Member", b =>
-=======
-                    b.Property<double>("price")
-                        .HasColumnType("REAL");
-
-                    b.Property<string>("publisher")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("title")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("writer")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Books");
-                });
-
-            modelBuilder.Entity("backend.practice.Entities.Borrow", b =>
->>>>>>> 1b60adb338816233eb6de69ddf1caf2c1dd5a311
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-<<<<<<< HEAD
                     b.Property<string>("Family")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -82,43 +50,6 @@ namespace backend.practice.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("UserName")
-=======
-                    b.Property<int>("BookId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("BorrowTime")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("MemberId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime?>("ReturnTime")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("MemberId");
-
-                    b.ToTable("Borrows");
-                });
-
-            modelBuilder.Entity("backend.practice.Entities.Member", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Firstname")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Lastname")
->>>>>>> 1b60adb338816233eb6de69ddf1caf2c1dd5a311
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -127,7 +58,6 @@ namespace backend.practice.Migrations
                     b.ToTable("Members");
                 });
 
-<<<<<<< HEAD
             modelBuilder.Entity("toytoy_store_backend.Entities.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -196,25 +126,6 @@ namespace backend.practice.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
-=======
-            modelBuilder.Entity("backend.practice.Entities.Borrow", b =>
-                {
-                    b.HasOne("backend.practice.Entities.Book", "Book")
-                        .WithMany()
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("backend.practice.Entities.Member", "Member")
-                        .WithMany()
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-
-                    b.Navigation("Member");
->>>>>>> 1b60adb338816233eb6de69ddf1caf2c1dd5a311
                 });
 #pragma warning restore 612, 618
         }
