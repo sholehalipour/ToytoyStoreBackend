@@ -11,7 +11,7 @@ using toytoy_store_backend.DbContextes;
 namespace toytoy_store_backend.Migrations
 {
     [DbContext(typeof(LibraryDB))]
-    [Migration("20250709093237_M040418")]
+    [Migration("20250709094243_M040418")]
     partial class M040418
     {
         /// <inheritdoc />

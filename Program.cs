@@ -23,21 +23,17 @@ app.UseCors(policy =>
 app.UseHttpsRedirection();
 app.MapGet("members/List", ([FromServices] LibraryDB db) =>
 {
-    // using var db = new LibraryDB();
     return db.Members.ToList();
-    //  "Products List";
+
 });
 app.MapPost("members/Create", ([FromServices] LibraryDB db, [FromBody] Member member) =>
 {
-    // using var db = new LibraryDB();
     db.Members.Add(member);
     db.SaveChanges();
-
     return "user Created!";
 });
 app.MapPut("members/Update/{id}", ([FromServices] LibraryDB db, [FromRoute] int id, [FromBody] Member member) =>
 {
-    // using var db = new LibraryDB();
     var b = db.Members.Find(id);
     if (b == null)
     {
@@ -52,7 +48,6 @@ app.MapPut("members/Update/{id}", ([FromServices] LibraryDB db, [FromRoute] int 
 });
 app.MapDelete("members/Delete/{id}", ([FromServices] LibraryDB db, [FromRoute] int id) =>
 {
-    // using var db = new LibraryDB();
     var member = db.Members.Find(id);
     if (member == null)
     {
