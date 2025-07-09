@@ -24,18 +24,18 @@ app.UseHttpsRedirection();
 app.MapGet("members/List", ([FromServices] LibraryDB db) =>
 {
     // using var db = new LibraryDB();
-    return db.Products.ToList();
+    return db.Members.ToList();
     //  "Products List";
 });
-app.MapPost("members/Create", ([FromServices] LibraryDB db, [FromBody] Product product) =>
+app.MapPost("members/Create", ([FromServices] LibraryDB db, [FromBody] Member member) =>
 {
     // using var db = new LibraryDB();
-    db.Products.Add(product);
+    db.Members.Add(member);
     db.SaveChanges();
 
     return "user Created!";
 });
-app.MapPut("members/Update/{id}", ([FromServices] LibraryDB db, [FromRoute] int id, [FromBody] Product product) =>
+app.MapPut("members/Update/{id}", ([FromServices] LibraryDB db, [FromRoute] int id, [FromBody] Member member) =>
 {
     // using var db = new LibraryDB();
     var b = db.Members.Find(id);
@@ -43,10 +43,10 @@ app.MapPut("members/Update/{id}", ([FromServices] LibraryDB db, [FromRoute] int 
     {
         return new { Message = "Not Found usert!" };
     }
-    b.Name = Member.Name;
-    b.Family = Member.Family;
-    b.UserName = Member.UserName;
-    b.Password = Member.Password;
+    b.Name = member.Name;
+    b.Family = member.Family;
+    b.UserName = member.UserName;
+    b.Password = member.Password;
     db.SaveChanges();
     return new { Message = "user Updated!" };
 });
@@ -62,7 +62,7 @@ app.MapDelete("members/Delete/{id}", ([FromServices] LibraryDB db, [FromRoute] i
     db.SaveChanges();
     return new { IsOk = true, Result = "User Removed!" };
 });
-app.MapGet("members/List", ([FromServices] LibraryDB db) =>
+app.MapGet("products/List", ([FromServices] LibraryDB db) =>
 {
     // using var db = new LibraryDB();
     return db.Products.ToList();
