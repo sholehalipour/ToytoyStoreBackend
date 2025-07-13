@@ -4,7 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>toytoy_store_backend</RootNamespace>
+    <RootNamespace>ToytoyStoreBackend</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

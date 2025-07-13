@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using toytoy_store_backend.DbContextes;
+using ToytoyStoreBackend.DbContextes;
 
 #nullable disable
 
-namespace toytoy_store_backend.Migrations
+namespace ToytoyStoreBackend.Migrations
 {
     [DbContext(typeof(LibraryDB))]
-    [Migration("20250709093237_M040418")]
-    partial class M040418
+    [Migration("20250713224645_M040423")]
+    partial class M040423
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,7 +20,7 @@ namespace toytoy_store_backend.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.6");
 
-            modelBuilder.Entity("toytoy_store_backend.Entities.Category", b =>
+            modelBuilder.Entity("ToytoyStoreBackend.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -31,7 +31,7 @@ namespace toytoy_store_backend.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("toytoy_store_backend.Entities.Member", b =>
+            modelBuilder.Entity("ToytoyStoreBackend.Entities.Member", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -58,7 +58,7 @@ namespace toytoy_store_backend.Migrations
                     b.ToTable("Members");
                 });
 
-            modelBuilder.Entity("toytoy_store_backend.Entities.Order", b =>
+            modelBuilder.Entity("ToytoyStoreBackend.Entities.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -86,7 +86,7 @@ namespace toytoy_store_backend.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("toytoy_store_backend.Entities.OrderItem", b =>
+            modelBuilder.Entity("ToytoyStoreBackend.Entities.OrderItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -97,7 +97,7 @@ namespace toytoy_store_backend.Migrations
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("toytoy_store_backend.Entities.Product", b =>
+            modelBuilder.Entity("ToytoyStoreBackend.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

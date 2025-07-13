@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using toytoy_store_backend.DbContextes;
-using toytoy_store_backend.Entities;
+using ToytoyStoreBackend.DbContextes;
+using ToytoyStoreBackend.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();

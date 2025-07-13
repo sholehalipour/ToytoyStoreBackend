@@ -1,13 +1,11 @@
-<<<<<<< HEAD
-namespace toytoy_store_backend.Entities.Base
-=======
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ToytoyStoreBackend.Entities.Base;
 
-namespace backend.practice.Entities.Base
->>>>>>> 1b60adb338816233eb6de69ddf1caf2c1dd5a311
+namespace ToytoyStoreBackend.Entities.Base
+
 {
     public abstract class Thing
     {

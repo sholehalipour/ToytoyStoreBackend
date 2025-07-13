@@ -1,9 +1,10 @@
-using toytoy_store_backend.Entities.Base;
+// using ToytoyStoreBackend.Entities;
+using ToytoyStoreBackend.Entities.Base;
 
-namespace toytoy_store_backend.Entities
+namespace ToytoyStoreBackend.Entities
 {
-    public class Category :Thing
+    public class Category : Thing
     {
-        
+
     }
 }

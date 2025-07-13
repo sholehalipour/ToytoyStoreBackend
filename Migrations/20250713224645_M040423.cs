@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace toytoy_store_backend.Migrations
+namespace ToytoyStoreBackend.Migrations
 {
     /// <inheritdoc />
-    public partial class M0404141 : Migration
+    public partial class M040423 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -29,11 +29,9 @@ namespace toytoy_store_backend.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    FirstName = table.Column<string>(type: "TEXT", nullable: false),
-                    LastName = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Family = table.Column<string>(type: "TEXT", nullable: false),
                     UserName = table.Column<string>(type: "TEXT", nullable: false),
-                    Email = table.Column<string>(type: "TEXT", nullable: true),
-                    PhoneNumber = table.Column<int>(type: "INTEGER", nullable: false),
                     Password = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>

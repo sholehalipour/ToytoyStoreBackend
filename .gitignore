@@ -10,25 +10,20 @@
 *.rsuser
 *.suo
 *.user
-*.userosscache
-*.sln.docstates
-<<<<<<< HEAD
+*.userosscache*.sln.docstates
 
-=======
+*.sln.docstates<<<<<<< HEAD
+
 #Sqlite Files
 DBFiles/
->>>>>>> 1b60adb338816233eb6de69ddf1caf2c1dd5a311
+# User-specific files (MonoDevelop/Xamarin Studio)
+*.userprefs
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
 # Mono auto generated files
 mono_crash.*
-<<<<<<< HEAD
-#Sqlite Files
-DBFiles/
-=======
 
->>>>>>> 1b60adb338816233eb6de69ddf1caf2c1dd5a311
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

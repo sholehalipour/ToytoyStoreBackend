@@ -1,6 +1,6 @@
-using toytoy_store_backend.Entities.Base;
-
-namespace toytoy_store_backend.Entities
+// using ToytoyStoreBackend.Entities
+using ToytoyStoreBackend.Entities.Base;
+namespace ToytoyStoreBackend.Entities
 {
     public class Order : Thing
 

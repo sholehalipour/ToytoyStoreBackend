@@ -1,0 +1,6 @@
+@ToytoyStoreBackend_HostAddress = http://localhost:5196
+
+GET {{ToytoyStoreBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
