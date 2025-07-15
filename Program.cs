@@ -33,7 +33,6 @@ app.MapGet("members/List",
         Name = b.Name,
         Family = b.Family,
         UserName = b.UserName,
-        // Password = b.Password
     }).ToList();
 
 });
@@ -111,7 +110,7 @@ app.MapGet("products/List",
 
     return db.Products.Select(b => new ProductListDto
     {
-
+        Id = b.Guid,
         ProductName = b.Productname,
         Description = b.Description,
         Brand = b.Brand,
@@ -158,11 +157,11 @@ app.MapPut("products/Update/{guid}",
         };
     }
 
-    b.Productname = productUpdateDto.ProductName??"";
-    b.Description = productUpdateDto.Description??"";
-    b.Brand = productUpdateDto.Brand??"";
-    b.Category = productUpdateDto.Category??"";
-    b.Sku = productUpdateDto.Sku??"";
+    b.Productname = productUpdateDto.ProductName ?? "";
+    b.Description = productUpdateDto.Description ?? "";
+    b.Brand = productUpdateDto.Brand ?? "";
+    b.Category = productUpdateDto.Category ?? "";
+    b.Sku = productUpdateDto.Sku ?? "";
     b.Price = productUpdateDto.Price ?? 0;
     db.SaveChanges();
     return new CommandResultDto
