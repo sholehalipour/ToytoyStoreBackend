@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using ToytoyStoreBackend.DbContextes;
+using ToytoyStoreBackend.DTOs.Common;
+using ToytoyStoreBackend.DTOs.Members;
+using ToytoyStoreBackend.DTOs.Products;
 using ToytoyStoreBackend.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,85 +24,177 @@ app.UseCors(policy =>
     .AllowAnyOrigin();
 });
 app.UseHttpsRedirection();
-app.MapGet("members/List", ([FromServices] LibraryDB db) =>
+app.MapGet("members/List",
+ ([FromServices] LibraryDB db) =>
 {
-    return db.Members.ToList();
+    return db.Members.Select(b => new MemberListDto
+    {
+        Id = b.Guid,
+        Name = b.Name,
+        Family = b.Family,
+        UserName = b.UserName,
+        // Password = b.Password
+    }).ToList();
 
 });
-app.MapPost("members/Create", ([FromServices] LibraryDB db, [FromBody] Member member) =>
+app.MapPost("members/Create", (
+    [FromServices] LibraryDB db,
+     [FromBody] MemberAddDto memberAddDto) =>
 {
+    var member = new Member
+    {
+        Name = !string.IsNullOrEmpty(memberAddDto.Name) ? memberAddDto.Name : "بدون نام",
+        Family = !string.IsNullOrEmpty(memberAddDto.Family) ? memberAddDto.Family : " بدون نام خانوادگی",
+        UserName = !string.IsNullOrEmpty(memberAddDto.UserName) ? memberAddDto.UserName : "بدون نام کاربری",
+        Password = !string.IsNullOrEmpty(memberAddDto.Password) ? memberAddDto.Password : "بدون رمز عبور",
+
+    };
     db.Members.Add(member);
     db.SaveChanges();
-    return "user Created!";
+    return new CommandResultDto
+    {
+        Successfull = true,
+        Message = "user Created!"
+    };
+
 });
-app.MapPut("members/Update/{id}", ([FromServices] LibraryDB db, [FromRoute] int id, [FromBody] Member member) =>
+app.MapPut("members/Update/{guid}",
+ ([FromServices] LibraryDB db,
+  [FromRoute] string guid,
+   [FromBody] MemberUpdateDto memberUpdateDto) =>
 {
-    var b = db.Members.Find(id);
+    var b = db.Members.FirstOrDefault(m => m.Guid == guid);
     if (b == null)
     {
-        return new { Message = "Not Found usert!" };
+        return new CommandResultDto
+        {
+            Successfull = false,
+
+            Message = "Not Found usert!"
+        };
     }
-    b.Name = member.Name;
-    b.Family = member.Family;
-    b.UserName = member.UserName;
-    b.Password = member.Password;
+    b.Name = memberUpdateDto.Name ?? "بدون نام";
+    b.Family = memberUpdateDto.Family;
+    b.UserName = memberUpdateDto.UserName;
+    // b.Password = memberUpdateDto.Password;
     db.SaveChanges();
-    return new { Message = "user Updated!" };
+    return new CommandResultDto
+    {
+        Successfull = true,
+        Message = "user Updated!"
+    };
 });
-app.MapDelete("members/Delete/{id}", ([FromServices] LibraryDB db, [FromRoute] int id) =>
+app.MapDelete("members/Delete/{guid}",
+ ([FromServices] LibraryDB db,
+  [FromRoute] string guid) =>
 {
-    var member = db.Members.Find(id);
+    var member = db.Members.FirstOrDefault(m => m.Guid == guid);
     if (member == null)
     {
-        return new { IsOk = false, Result = "Not Found user" };
+        return new CommandResultDto
+        {
+            Successfull = false,
+            Message = "Not Found user"
+        };
     }
     db.Members.Remove(member);
     db.SaveChanges();
-    return new { IsOk = true, Result = "User Removed!" };
+    return new CommandResultDto
+    {
+        Successfull = true,
+        Message = "User Removed!"
+    };
 });
-app.MapGet("products/List", ([FromServices] LibraryDB db) =>
+app.MapGet("products/List",
+ ([FromServices] LibraryDB db) =>
 {
-    // using var db = new LibraryDB();
-    return db.Products.ToList();
-    //  "Products List";
+
+    return db.Products.Select(b => new ProductListDto
+    {
+
+        ProductName = b.Productname,
+        Description = b.Description,
+        Brand = b.Brand,
+        Category = b.Category,
+        Sku = b.Sku,
+        Price = b.Price,
+    }).ToList();
 });
-app.MapPost("products/Create", ([FromServices] LibraryDB db, [FromBody] Product product) =>
+app.MapPost("products/Create",
+ ([FromServices] LibraryDB db,
+ [FromBody] ProductAddDto ProductAddDto) =>
 {
-    // using var db = new LibraryDB();
+    var product = new Product
+    {
+        Productname = !string.IsNullOrEmpty(ProductAddDto.ProductName) ? ProductAddDto.ProductName : " بدون نام محصول",
+        Description = !string.IsNullOrEmpty(ProductAddDto.Description) ? ProductAddDto.Description : " بدون توضیح",
+        Category = !string.IsNullOrEmpty(ProductAddDto.Category) ? ProductAddDto.Category : "بدون دسته بندی",
+        Brand = !string.IsNullOrEmpty(ProductAddDto.Brand) ? ProductAddDto.Brand : "بدون برند",
+        Sku = !string.IsNullOrEmpty(ProductAddDto.Sku) ? ProductAddDto.Sku : "بدون شماره سریال",
+        Price = ProductAddDto.Price ?? 0,
+    };
     db.Products.Add(product);
     db.SaveChanges();
-
-    return "Products Created!";
+    return new CommandResultDto
+    {
+        Successfull = true,
+        Message = "Products Created!"
+    };
 });
-app.MapPut("products/Update/{id}", ([FromServices] LibraryDB db, [FromRoute] int id, [FromBody] Product product) =>
+app.MapPut("products/Update/{guid}",
+ ([FromServices] LibraryDB db,
+ [FromRoute] string guid,
+ [FromBody] ProductUpdateDto productUpdateDto) =>
 {
-    // using var db = new LibraryDB();
-    var b = db.Products.Find(id);
+
+    var b = db.Products.FirstOrDefault(m => m.Guid == guid);
     if (b == null)
     {
-        return new { Message = "Not Found Product!" };
+        return new CommandResultDto
+        {
+            Successfull = false,
+
+            Message = "Not Found Product!"
+        };
     }
-    b.Productname = product.Productname;
-    b.Description = product.Description;
-    b.Brand = product.Brand;
-    b.Category = product.Category;
-    b.Sku = product.Sku;
+
+    b.Productname = productUpdateDto.ProductName??"";
+    b.Description = productUpdateDto.Description??"";
+    b.Brand = productUpdateDto.Brand??"";
+    b.Category = productUpdateDto.Category??"";
+    b.Sku = productUpdateDto.Sku??"";
+    b.Price = productUpdateDto.Price ?? 0;
     db.SaveChanges();
-    return new { Message = "Products Updated!" };
-});
-app.MapDelete("products/Delete/{id}", ([FromServices] LibraryDB db, [FromRoute] int id) =>
-{
-    // using var db = new LibraryDB();
-    var product = db.Products.Find(id);
-    if (product == null)
+    return new CommandResultDto
     {
-        return new { IsOk = false, Result = "Not Found Product" };
-    }
+        Successfull = true,
+        Message = "Products Updated!"
+    };
+
+});
+app.MapDelete("products/Delete/{guid}",
+([FromServices] LibraryDB db,
+[FromRoute] string guid) =>
+{
+
+    var product = db.Products.FirstOrDefault(m => m.Guid == guid);
+    if (product == null)
+        return new CommandResultDto
+        {
+            Successfull = false,
+
+            Message = "Not Found Product!"
+        };
     db.Products.Remove(product);
     db.SaveChanges();
-    return new { IsOk = true, Result = "Products Removed!" };
-});
+    return new CommandResultDto
+    {
+        Successfull = true,
 
-// ff
+        Message = "Products Removed!"
+    };
+
+
+});
 app.Run();
 

@@ -1,5 +1,3 @@
-// using Microsoft.AspNetCore.Identity;
-// using ToytoyStoreBackend.Entities;
 using ToytoyStoreBackend.Entities.Base;
 namespace ToytoyStoreBackend.Entities
 {
