@@ -111,7 +111,7 @@ app.MapGet("products/List",
     return db.Products.Select(b => new ProductListDto
     {
         Id = b.Guid,
-        ProductName = b.Productname,
+        ProductName = b.ProductName,
         Description = b.Description,
         Brand = b.Brand,
         Category = b.Category,
@@ -125,7 +125,7 @@ app.MapPost("products/Create",
 {
     var product = new Product
     {
-        Productname = !string.IsNullOrEmpty(ProductAddDto.ProductName) ? ProductAddDto.ProductName : " بدون نام محصول",
+        ProductName = !string.IsNullOrEmpty(ProductAddDto.ProductName) ? ProductAddDto.ProductName : " بدون نام محصول",
         Description = !string.IsNullOrEmpty(ProductAddDto.Description) ? ProductAddDto.Description : " بدون توضیح",
         Category = !string.IsNullOrEmpty(ProductAddDto.Category) ? ProductAddDto.Category : "بدون دسته بندی",
         Brand = !string.IsNullOrEmpty(ProductAddDto.Brand) ? ProductAddDto.Brand : "بدون برند",
@@ -157,7 +157,7 @@ app.MapPut("products/Update/{guid}",
         };
     }
 
-    b.Productname = productUpdateDto.ProductName ?? "";
+    b.ProductName = productUpdateDto.ProductName ?? "";
     b.Description = productUpdateDto.Description ?? "";
     b.Brand = productUpdateDto.Brand ?? "";
     b.Category = productUpdateDto.Category ?? "";
