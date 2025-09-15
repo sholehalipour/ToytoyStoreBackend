@@ -4,10 +4,12 @@ namespace ToytoyStoreBackend.Entities
     public class Order : Thing
 
     {
-        public int OrderId { get; set; }
-        public DateTime OrderDate { get; set; }
-        public required string Status { get; set; }
-        public double TotalAmount { get; set; }
-        public required string PaymentMethod { get; set; }
+        public  DateTime OrderDate { get; set; } = DateTime.Now;
+        public required string Status { get; set; } = "Pending"; // Pending, Shipped, Delivered
+        public required int MemberId { get; set; }
+        public required Member Member { get; set; } 
+        public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+        public required Payment Payment { get; set; } 
+        public required Shipping Shipping { get; set; } 
     }
 }

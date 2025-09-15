@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ToytoyStoreBackend.DbContextes;
 
@@ -10,9 +11,11 @@ using ToytoyStoreBackend.DbContextes;
 namespace ToytoyStoreBackend.Migrations
 {
     [DbContext(typeof(LibraryDB))]
-    partial class LibraryDBModelSnapshot : ModelSnapshot
+    [Migration("20250824225823_3.6.1404")]
+    partial class _361404
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.6");
