@@ -7,7 +7,7 @@ using ToytoyStoreBackend.Entities;
 
 namespace ToytoyStoreBackend.Endpoints
 {
-    public static class MemberEndponits
+    public static class MemberEndpoints
     {
         public static void MapMemberEndPoints(this WebApplication app)
         {

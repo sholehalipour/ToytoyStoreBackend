@@ -25,8 +25,7 @@ namespace ToytoyStoreBackend.Endpoints
         Price = b.Price,
     }).ToListAsync();
     return result;
-
-});
+}).RequireAuthorization();
             app.MapPost("products/Create",
              async ([FromServices] LibraryDB db,
              [FromBody] ProductAddDto ProductAddDto) =>
