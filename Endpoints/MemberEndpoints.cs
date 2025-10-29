@@ -11,8 +11,9 @@ namespace ToytoyStoreBackend.Endpoints
     {
         public static void MapMemberEndPoints(this WebApplication app)
         {
-            app.MapGet("members/List",
- async ([FromServices] LibraryDB db) =>
+            app.MapGet("members/list", async
+            ([FromServices] LibraryDB db,
+            HttpContext context) =>
 {
     var result = await db.Members.Select(b => new MemberListDto
     {
@@ -22,12 +23,11 @@ namespace ToytoyStoreBackend.Endpoints
         UserName = b.UserName,
     }).ToListAsync();
     return result;
-
-
-});
-            app.MapPost("members/Create",
+}).RequireAuthorization();
+            app.MapPost("members/create",
              async (
                 [FromServices] LibraryDB db,
+                HttpContext context,
                  [FromBody] MemberAddDto memberAddDto) =>
             {
                 var member = new Member
@@ -46,8 +46,8 @@ namespace ToytoyStoreBackend.Endpoints
                     Message = "user Created!"
                 };
 
-            });
-            app.MapPut("members/Update/{guid}",
+            }).RequireAuthorization();
+            app.MapPut("members/update/{guid}",
              async ([FromServices] LibraryDB db,
               [FromRoute] string guid,
                [FromBody] MemberUpdateDto memberUpdateDto) =>
@@ -72,8 +72,8 @@ namespace ToytoyStoreBackend.Endpoints
                     Successfull = true,
                     Message = "user Updated!"
                 };
-            });
-            app.MapDelete("members/Delete/{guid}",
+            }).RequireAuthorization();
+            app.MapDelete("members/delete/{guid}",
              async ([FromServices] LibraryDB db,
               [FromRoute] string guid) =>
             {
@@ -93,7 +93,7 @@ namespace ToytoyStoreBackend.Endpoints
                     Successfull = true,
                     Message = "User Removed!"
                 };
-            });
+            }).RequireAuthorization();
         }
     }
 }

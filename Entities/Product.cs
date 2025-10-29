@@ -9,6 +9,7 @@ namespace ToytoyStoreBackend.Entities
         public required string Brand { get; set; }
         public required string Sku { get; set; }
         public required double Price { get; set; }
+        public required Admin Owner { get; set; }
         public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
     }
 }

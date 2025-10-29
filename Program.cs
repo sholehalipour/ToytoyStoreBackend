@@ -19,6 +19,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddCors();
 builder.Services.AddDbContext<LibraryDB>();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -28,15 +29,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = "yourdomain.com",
-            ValidAudience = "yourdomain.com",
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your_super_secret_key"))
+            ValidIssuer = "ToyToyStoryBackend.ir",
+            ValidAudience = "ToyToyStoryBackend.ir",
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJndWlkIjoiYmQ0ZGQwNzgtNWUyNi00NmFkLThiYjQtNWE2Mzk0MzliYjU3IiwiZnVsbG5hbWUiOiLZhdiv24zYsduM2Kog2LPYp9mF2KfZhtmHIiwiZXhwIjoxNzY1NjkxOTk1LCJpc3MiOiJUb3lUb3lTdG9yeUJhY2tlbmQuaXIiLCJhdWQiOiJUb3lUb3lTdG9yeUJhY2tlbmQuaXIifQ.5ZoZMLPbrMPLu3Ds1LNFCLcuoLMYhzHp0CgyTcouMR0"))
         };
     });
-
 builder.Services.AddAuthorization();
 var app = builder.Build();
-
+app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 if (app.Environment.IsDevelopment())
@@ -74,34 +74,28 @@ app.MapPost("auth/login", async Task<LoginResultDto> ([FromServices] LibraryDB d
                    // new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your_super_secret_key"));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJndWlkIjoiYmQ0ZGQwNzgtNWUyNi00NmFkLThiYjQtNWE2Mzk0MzliYjU3IiwiZnVsbG5hbWUiOiLZhdiv24zYsduM2Kog2LPYp9mF2KfZhtmHIiwiZXhwIjoxNzY1NjkxOTk1LCJpc3MiOiJUb3lUb3lTdG9yeUJhY2tlbmQuaXIiLCJhdWQiOiJUb3lUb3lTdG9yeUJhY2tlbmQuaXIifQ.5ZoZMLPbrMPLu3Ds1LNFCLcuoLMYhzHp0CgyTcouMR0"));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
         var token = new JwtSecurityToken(
-            issuer: "yourdomain.com",
-            audience: "yourdomain.com",
+            issuer: "ToyToyStoryBackend.ir",
+            audience: "ToyToyStoryBackend.ir",
             claims: claims,
             expires: DateTime.Now.AddMonths(2),
             signingCredentials: creds);
-
         var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-
         return new LoginResultDto
         {
             Successfull = true,
             Token = tokenString,
         };
-
     }
     return new LoginResultDto
     {
         Successfull = false,
         Message = "نام کاربری یا کلمه عبور صحیح نیست",
     };
-
 });
-app.UseHttpsRedirection();
-app.MapMemberEndPoints();
 app.MapProductEndPoints();
+app.MapMemberEndPoints();
 app.Run();
 
